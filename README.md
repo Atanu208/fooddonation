@@ -1,4 +1,4 @@
-# 🍱 FoodShare — AI-Powered Food Donation Marketplace
+# 🍱 FoodShare
 
 **Reduce food waste. Feed the hungry. Build community.**
 
