@@ -5,6 +5,7 @@
 FoodShare is a full-stack web platform that connects **donors** (restaurants, grocery stores, households, event caterers) with **NGOs and food banks**, using AI to make food rescue fast, smart, and transparent.
 
 > 🌐 **Live Demo:** https://fooddonation-jxvu.onrender.com
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a0596155-3518-48e6-b2c0-23f9e442a201" />
 
 ---
 
