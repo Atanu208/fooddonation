@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout/base :: head('Manage Users - FoodShare')}"></head>
+<body>
+<div th:replace="~{layout/base :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-users text-green-500 mr-2"></i>Manage Users
+        </h1>
+        <p class="text-gray-600" th:text="${'Total: ' + users.totalElements}">Total: 0</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6 overflow-x-auto">
+        <table class="w-full">
+            <thead>
+            <tr class="bg-gray-50">
+                <th class="px-4 py-2 text-left">ID</th>
+                <th class="px-4 py-2 text-left">Name</th>
+                <th class="px-4 py-2 text-left">Email</th>
+                <th class="px-4 py-2 text-left">Role</th>
+                <th class="px-4 py-2 text-left">City</th>
+                <th class="px-4 py-2 text-left">Status</th>
+                <th class="px-4 py-2 text-left">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users.content}" class="border-t">
+                <td class="px-4 py-2" th:text="${user.id}">1</td>
+                <td class="px-4 py-2" th:text="${user.name}">Name</td>
+                <td class="px-4 py-2" th:text="${user.email}">email</td>
+                <td class="px-4 py-2">
+                    <span class="px-2 py-1 rounded text-sm"
+                          th:class="${user.role.name() == 'ADMIN' ? 'bg-purple-100 text-purple-800' : user.role.name() == 'NGO' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}"
+                          th:text="${user.role.name()}">DONOR</span>
+                </td>
+                <td class="px-4 py-2" th:text="${user.city ?: '-'}">City</td>
+                <td class="px-4 py-2">
+                    <span class="px-2 py-1 rounded text-sm"
+                          th:class="${user.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}"
+                          th:text="${user.active ? 'Active' : 'Inactive'}">Active</span>
+                </td>
+                <td class="px-4 py-2">
+                    <form th:if="${user.role.name() != 'ADMIN'}"
+                          th:action="@{/admin/users/{id}/toggle-active(id=${user.id})}" method="post"
+                          th:data-confirm="|Are you sure you want to ${user.active ? 'deactivate' : 'activate'} this user?|"
+                          data-confirm>
+                        <button type="submit" class="text-sm"
+                                th:class="${user.active ? 'text-red-500 hover:text-red-700' : 'text-green-500 hover:text-green-700'}">
+                            <i th:class="${user.active ? 'fas fa-ban' : 'fas fa-check'}"></i>
+                            <span th:text="${user.active ? 'Deactivate' : 'Activate'}"></span>
+                        </button>
+                    </form>
+                    <span th:if="${user.role.name() == 'ADMIN'}" class="text-gray-400 text-sm">Protected</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6 flex justify-between items-center">
+        <a th:if="${users.hasPrevious()}" th:href="@{/admin/users(page=${users.number - 1})}"
+           class="text-blue-500 hover:text-blue-700"><i class="fas fa-arrow-left"></i> Previous</a>
+        <span class="text-gray-500" th:text="${'Page ' + (users.number + 1) + ' of ' + (users.totalPages == 0 ? 1 : users.totalPages)}">Page 1 of 1</span>
+        <a th:if="${users.hasNext()}" th:href="@{/admin/users(page=${users.number + 1})}"
+           class="text-blue-500 hover:text-blue-700">Next <i class="fas fa-arrow-right"></i></a>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: footer}"></div>
+</body>
+</html>

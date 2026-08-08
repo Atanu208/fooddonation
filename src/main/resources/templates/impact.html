@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impact - FoodShare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div th:replace="~{layout/base :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-chart-line text-green-500 mr-2"></i>Our Impact
+        </h1>
+        <p class="text-gray-600">Real-time platform impact from every completed donation</p>
+    </div>
+
+    <!-- Impact Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-green-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Meals Served</p>
+                    <p class="text-3xl font-extrabold text-green-600" th:text="${mealsServed}">0</p>
+                </div>
+                <i class="fas fa-bowl-food text-4xl text-green-500"></i>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-emerald-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Food Waste Saved</p>
+                    <p class="text-3xl font-extrabold text-emerald-600">
+                        <span th:text="${wasteSavedKg}">0</span> kg
+                    </p>
+                </div>
+                <i class="fas fa-recycle text-4xl text-emerald-500"></i>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-blue-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Completed Donations</p>
+                    <p class="text-3xl font-extrabold text-blue-600" th:text="${completedDonations}">0</p>
+                </div>
+                <i class="fas fa-check-circle text-4xl text-blue-500"></i>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-purple-500">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-500 text-sm">Total Donations</p>
+                    <p class="text-3xl font-extrabold text-purple-600" th:text="${totalDonations}">0</p>
+                </div>
+                <i class="fas fa-utensils text-4xl text-purple-500"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+            <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-user text-green-600 text-2xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Active Donors</p>
+                <p class="text-2xl font-bold" th:text="${totalDonors}">0</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+            <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-hand-holding-heart text-blue-600 text-2xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Partner NGOs</p>
+                <p class="text-2xl font-bold" th:text="${totalNGOs}">0</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 flex items-center">
+            <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-clock text-yellow-600 text-2xl"></i>
+            </div>
+            <div>
+                <p class="text-gray-500 text-sm">Donations in Progress</p>
+                <p class="text-2xl font-bold" th:text="${activeDonations}">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Impact Report -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+            <h2 class="text-xl font-bold">
+                <i class="fas fa-robot text-purple-500 mr-2"></i>AI Impact Report
+            </h2>
+            <button type="button" id="ai-impact-btn"
+                    class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                <i class="fas fa-wand-magic-sparkles mr-2"></i>Generate AI Report
+            </button>
+        </div>
+        <p id="ai-impact-status" class="text-sm text-gray-500 mb-3">Ask AI to narrate your platform's impact from live metrics.</p>
+        <div id="ai-impact-report" class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-gray-700 leading-relaxed" hidden></div>
+    </div>
+
+    <!-- Recently Completed -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold mb-4">
+            <i class="fas fa-trophy text-green-500 mr-2"></i>Recently Completed Donations
+        </h2>
+        <div th:if="${recentCompleted != null && !recentCompleted.isEmpty()}">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                    <tr class="bg-gray-50">
+                        <th class="px-4 py-2 text-left">Food</th>
+                        <th class="px-4 py-2 text-left">Quantity</th>
+                        <th class="px-4 py-2 text-left">Donor</th>
+                        <th class="px-4 py-2 text-left">NGO</th>
+                        <th class="px-4 py-2 text-left">Completed</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="donation : ${recentCompleted}" class="border-t">
+                        <td class="px-4 py-2" th:text="${donation.foodDescription}">Food</td>
+                        <td class="px-4 py-2" th:text="${donation.quantity}">-</td>
+                        <td class="px-4 py-2" th:text="${donation.donor.name}">Donor</td>
+                        <td class="px-4 py-2" th:text="${donation.ngo.name}">NGO</td>
+                        <td class="px-4 py-2">
+                            <span th:if="${donation.completedAt != null}"
+                                  th:text="${#temporals.format(donation.completedAt, 'dd/MM/yyyy')}">-</span>
+                            <span th:if="${donation.completedAt == null}" class="text-gray-400">-</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div th:if="${recentCompleted == null || recentCompleted.isEmpty()}" class="text-center py-8">
+            <i class="fas fa-flag-checkered text-4xl text-gray-300 mb-2"></i>
+            <p class="text-gray-500">No completed donations yet. Let's change that!</p>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: footer}"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var impactBtn = document.getElementById('ai-impact-btn');
+        var status = document.getElementById('ai-impact-status');
+        var report = document.getElementById('ai-impact-report');
+        if (!impactBtn) {
+            return;
+        }
+
+        impactBtn.addEventListener('click', function () {
+            impactBtn.disabled = true;
+            status.textContent = 'Writing your impact report...';
+            report.hidden = true;
+            window.FoodShareAI.post('/ai/impact-report')
+                .then(function (data) {
+                    report.textContent = (data && data.message) || 'No report generated.';
+                    report.hidden = false;
+                    status.textContent = '';
+                })
+                .catch(function (err) {
+                    status.textContent = err.message;
+                    status.className = 'text-sm text-red-500';
+                })
+                .finally(function () {
+                    impactBtn.disabled = false;
+                });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head('Create Donation - FoodShare')}"></head>
+<body>
+<div th:replace="~{layout/base :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">
+            <i class="fas fa-plus-circle text-green-500 mr-2"></i>Create New Donation
+        </h1>
+
+        <form th:action="@{/donor/create-donation}" th:object="${donation}" method="post">
+            <!-- Food Description -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="foodDescription">
+                    Food Description *
+                </label>
+                <textarea id="foodDescription" th:field="*{foodDescription}" required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                          rows="3" placeholder="Describe the food you're donating (e.g., 20 boxes of vegetarian biryani)"></textarea>
+                <span th:if="${#fields.hasErrors('foodDescription')}" th:errors="*{foodDescription}" class="text-red-500 text-sm"></span>
+                <button type="button" id="ai-generate-btn"
+                        class="mt-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    <i class="fas fa-wand-magic-sparkles mr-2"></i>Generate with AI
+                </button>
+                <span id="ai-status" class="ml-3 text-sm text-gray-500"></span>
+            </div>
+
+            <!-- Quantity -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="quantity">
+                    Quantity
+                </label>
+                <input type="text" id="quantity" th:field="*{quantity}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="e.g., 20 boxes, 50 plates, 10 kg">
+            </div>
+
+            <!-- Food Type -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="foodType">
+                    Food Type
+                </label>
+                <select id="foodType" th:field="*{foodType}"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+                    <option value="">Select food type</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Non-Vegetarian">Non-Vegetarian</option>
+                    <option value="Both">Both</option>
+                </select>
+            </div>
+
+            <!-- Pickup Address -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="pickupAddress">
+                    Pickup Address *
+                </label>
+                <input type="text" id="pickupAddress" th:field="*{pickupAddress}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter the pickup address">
+                <span th:if="${#fields.hasErrors('pickupAddress')}" th:errors="*{pickupAddress}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <!-- City -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="pickupCity">
+                        City
+                    </label>
+                    <input type="text" id="pickupCity" th:field="*{pickupCity}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="City">
+                </div>
+
+                <!-- State -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="pickupState">
+                        State
+                    </label>
+                    <input type="text" id="pickupState" th:field="*{pickupState}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="State">
+                </div>
+
+                <!-- Pincode -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2" for="pickupPincode">
+                        Pincode
+                    </label>
+                    <input type="text" id="pickupPincode" th:field="*{pickupPincode}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="Pincode">
+                </div>
+            </div>
+
+            <!-- Pickup Time -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="pickupTime">
+                    Pickup Time *
+                </label>
+                <input type="datetime-local" id="pickupTime" th:field="*{pickupTime}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+                <span th:if="${#fields.hasErrors('pickupTime')}" th:errors="*{pickupTime}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Expiry Time -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="expiryTime">
+                    Best Before (Expiry)
+                </label>
+                <input type="text" id="expiryTime" th:field="*{expiryTime}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="e.g., Within 2 hours, Tomorrow morning">
+            </div>
+
+            <!-- Is Packaged -->
+            <div class="mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" th:field="*{packaged}"
+                           class="mr-2 leading-tight">
+                    <span class="text-gray-700 font-bold">Food is properly packaged</span>
+                </label>
+            </div>
+
+            <!-- Special Instructions -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="specialInstructions">
+                    Special Instructions
+                </label>
+                <textarea id="specialInstructions" th:field="*{specialInstructions}"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                          rows="2" placeholder="Any special instructions for pickup"></textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex gap-4">
+                <button type="submit"
+                        class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                    <i class="fas fa-plus mr-2"></i>Create Donation
+                </button>
+                <a href="/dashboard"
+                   class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition text-center">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: footer}"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var generateBtn = document.getElementById('ai-generate-btn');
+        var status = document.getElementById('ai-status');
+        if (!generateBtn) {
+            return;
+        }
+
+        generateBtn.addEventListener('click', function () {
+            var payload = {
+                foodType: document.getElementById('foodType').value,
+                quantity: document.getElementById('quantity').value,
+                city: document.getElementById('pickupCity').value,
+                notes: document.getElementById('specialInstructions').value
+            };
+            generateBtn.disabled = true;
+            status.textContent = 'Generating...';
+            window.FoodShareAI.post('/ai/listing', payload)
+                .then(function (data) {
+                    if (data.description) {
+                        document.getElementById('foodDescription').value = data.description;
+                    }
+                    if (data.quantity) {
+                        document.getElementById('quantity').value = data.quantity;
+                    }
+                    if (data.bestBefore) {
+                        document.getElementById('expiryTime').value = data.bestBefore;
+                    }
+                    status.textContent = 'Done! Review and edit if needed.';
+                    status.className = 'ml-3 text-sm text-green-600';
+                })
+                .catch(function (err) {
+                    status.textContent = err.message;
+                    status.className = 'ml-3 text-sm text-red-500';
+                })
+                .finally(function () {
+                    generateBtn.disabled = false;
+                });
+        });
+    });
+</script>
+</body>
+</html>

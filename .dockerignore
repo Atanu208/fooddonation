@@ -1,0 +1,10 @@
+target/
+.git/
+.idea/
+*.iml
+.vscode/
+.mvn/
+.mvnw
+.mvnw.cmd
+test-output.log
+*.md

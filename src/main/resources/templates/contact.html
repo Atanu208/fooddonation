@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - FoodShare</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+<div th:replace="~{layout/base :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Contact Us</h1>
+        <p class="text-gray-600 max-w-xl mx-auto">
+            Have a question, want to partner with us, or need help with a donation? We'd love to hear from you.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Contact Info -->
+        <div class="bg-white rounded-xl shadow-md p-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Get in Touch</h2>
+            <div class="space-y-5">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-map-marker-alt text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Address</p>
+                        <p class="text-gray-600">FoodShare HQ, 42 MG Road, Bengaluru, Karnataka 560001</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-envelope text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Email</p>
+                        <p class="text-gray-600">info@foodshare.com</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-phone text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Phone</p>
+                        <p class="text-gray-600">+91 98765 43210</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-clock text-green-600"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold">Hours</p>
+                        <p class="text-gray-600">Mon - Sat: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white rounded-xl shadow-md p-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">Send us a Message</h2>
+            <form th:action="@{/contact}" method="post">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="Enter your name">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                    <input type="email" id="email" name="email" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="Enter your email">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                           placeholder="How can we help?">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="message">Message</label>
+                    <textarea id="message" name="message" rows="4" required
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                              placeholder="Write your message..."></textarea>
+                </div>
+                <button type="submit"
+                        class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition">
+                    <i class="fas fa-paper-plane mr-2"></i>Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: footer}"></div>
+</body>
+</html>

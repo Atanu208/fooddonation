@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Food Donation Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-green-400 to-blue-500 min-h-screen flex items-center justify-center py-8">
+<div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-8">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-user-plus text-green-500 mr-2"></i>Create Account
+        </h1>
+        <p class="text-gray-600 mt-2">Join us in fighting hunger</p>
+    </div>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="grid md:grid-cols-2 gap-4">
+            <!-- Name -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                    <i class="fas fa-user mr-2"></i>Full Name
+                </label>
+                <input type="text" id="name" th:field="*{name}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your name">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    <i class="fas fa-envelope mr-2"></i>Email
+                </label>
+                <input type="email" id="email" th:field="*{email}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your email">
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    <i class="fas fa-lock mr-2"></i>Password
+                </label>
+                <input type="password" id="password" th:field="*{password}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Min 6 characters">
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
+                    <i class="fas fa-check-circle mr-2"></i>Confirm Password
+                </label>
+                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Confirm your password">
+                <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Role -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="role">
+                    <i class="fas fa-users mr-2"></i>I am a
+                </label>
+                <select id="role" th:field="*{role}" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500">
+                    <option value="">Select your role</option>
+                    <option value="DONOR">Donor (Individual/Restaurant/Hotel)</option>
+                    <option value="NGO">NGO / Charity Organization</option>
+                </select>
+                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="text-red-500 text-sm"></span>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="phoneNumber">
+                    <i class="fas fa-phone mr-2"></i>Phone Number
+                </label>
+                <input type="tel" id="phoneNumber" th:field="*{phoneNumber}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your phone number">
+            </div>
+
+            <!-- Organization Name (for NGOs) -->
+            <div class="mb-4 md:col-span-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="organizationName">
+                    <i class="fas fa-building mr-2"></i>Organization Name (if applicable)
+                </label>
+                <input type="text" id="organizationName" th:field="*{organizationName}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your organization name">
+            </div>
+
+            <!-- Address -->
+            <div class="mb-4 md:col-span-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="address">
+                    <i class="fas fa-map-marker-alt mr-2"></i>Address
+                </label>
+                <input type="text" id="address" th:field="*{address}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your address">
+            </div>
+
+            <!-- City -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="city">
+                    <i class="fas fa-city mr-2"></i>City
+                </label>
+                <input type="text" id="city" th:field="*{city}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your city">
+            </div>
+
+            <!-- State -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="state">
+                    <i class="fas fa-map mr-2"></i>State
+                </label>
+                <input type="text" id="state" th:field="*{state}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your state">
+            </div>
+
+            <!-- Pincode -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="pincode">
+                    <i class="fas fa-mail-bulk mr-2"></i>Pincode
+                </label>
+                <input type="text" id="pincode" th:field="*{pincode}"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
+                       placeholder="Enter your pincode">
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <button type="submit"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                <i class="fas fa-user-plus mr-2"></i>Register
+            </button>
+        </div>
+    </form>
+
+    <div class="mt-6 text-center">
+        <p class="text-gray-600">
+            Already have an account?
+            <a href="/login" class="text-green-500 hover:text-green-600 font-semibold">
+                Login here
+            </a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

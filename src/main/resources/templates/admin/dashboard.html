@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout/base :: head('Admin Dashboard - FoodShare')}"></head>
+<body>
+<div th:replace="~{layout/base :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">
+            <i class="fas fa-crown text-green-500 mr-2"></i>Admin Dashboard
+        </h1>
+        <p class="text-gray-600">Platform administration &amp; overview</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+            <p class="text-gray-500 text-sm">Total Donations</p>
+            <p class="text-2xl font-bold" th:text="${stats.totalDonations}">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+            <p class="text-gray-500 text-sm">Completed</p>
+            <p class="text-2xl font-bold" th:text="${stats.completedDonations}">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+            <p class="text-gray-500 text-sm">Total Donors</p>
+            <p class="text-2xl font-bold" th:text="${stats.totalDonors}">0</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+            <p class="text-gray-500 text-sm">Total NGOs</p>
+            <p class="text-2xl font-bold" th:text="${stats.totalNGOs}">0</p>
+        </div>
+    </div>
+
+    <div class="flex flex-wrap gap-4">
+        <a href="/admin/users" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition">
+            <i class="fas fa-users mr-2"></i>Manage Users
+        </a>
+        <a href="/admin/donations" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition">
+            <i class="fas fa-utensils mr-2"></i>All Donations
+        </a>
+        <a href="/swagger-ui.html" target="_blank" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition">
+            <i class="fas fa-book mr-2"></i>API Docs (Swagger)
+        </a>
+        <a href="/actuator/health" target="_blank" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition">
+            <i class="fas fa-heartbeat mr-2"></i>Health Checks
+        </a>
+    </div>
+</div>
+
+<div th:replace="~{layout/base :: footer}"></div>
+</body>
+</html>
